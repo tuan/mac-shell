@@ -95,6 +95,9 @@ if exists('g:vscode')
   nnoremap zm <Cmd>call VSCodeNotify('bookmarks.toggle')<CR>
   nnoremap zl <Cmd>call VSCodeNotify('bookmarks.listFromAllFiles')<CR>
 
+  " fuzzy find
+  nnoremap \f <Cmd>call VSCodeNotify('fuzzySearch.activeTextEditor')<CR>
+
   "quick scope hilight
   highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
   highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
