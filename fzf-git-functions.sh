@@ -11,7 +11,7 @@ fzf-down() {
 
 FZF_PREFIX="fzf-git-"
 
-function "${FZF_PREFIX}gf" () {
+function "${FZF_PREFIX}diff" () {
   is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
@@ -19,7 +19,7 @@ function "${FZF_PREFIX}gf" () {
   cut -c4- | sed 's/.* -> //'
 }
 
-function "${FZF_PREFIX}gb" () {
+function "${FZF_PREFIX}branch" () {
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-down --ansi --multi --tac --preview-window right:70% \
@@ -29,14 +29,14 @@ function "${FZF_PREFIX}gb" () {
 }
 
 # git tag
-function "${FZF_PREFIX}gt" () {
+function "${FZF_PREFIX}tag" () {
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -'$LINES
 }
 
-function "${FZF_PREFIX}gh" () {
+function "${FZF_PREFIX}commit-msg" () {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
@@ -45,10 +45,20 @@ function "${FZF_PREFIX}gh" () {
   grep -o "[a-f0-9]\{7,\}" | head -1
 }
 
-function "${FZF_PREFIX}gr" () {
+function "${FZF_PREFIX}remote" () {
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
   fzf-down --tac \
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" --remotes={1} | head -200' |
   cut -d$'\t' -f1
 }
+
+function "${FZF_PREFIX}diff-grep" () {
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --color=always -S "${*:-}" |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | head -1 | xargs git show --color=always' |
+  grep -o "[a-f0-9]\{7,\}" | head -1
+}
+
