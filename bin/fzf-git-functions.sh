@@ -25,7 +25,7 @@ function "${FZF_PREFIX}branch" () {
   fzf-down --ansi --multi --tac --preview-window right:70% \
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) -- | head -'$LINES |
   sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##' 
+  sed 's#^remotes/##'
 }
 
 # git tag
@@ -36,7 +36,7 @@ function "${FZF_PREFIX}tag" () {
     --preview 'git show --color=always {} | head -'$LINES
 }
 
-function "${FZF_PREFIX}commit-msg" () {
+function "${FZF_PREFIX}commit" () {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
