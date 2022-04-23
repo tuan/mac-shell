@@ -137,6 +137,7 @@ else
   "fzf
   nmap <leader>b :Buffers<CR>
   nmap <leader>f :Files<CR>
+  nmap <leader>r :Find<CR>
   set rtp+=/opt/homebrew/opt/fzf
 
   let g:rg_command = '
