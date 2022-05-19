@@ -57,8 +57,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=200}
 
 "" vscode only settings
-nnoremap zm <Cmd>call VSCodeNotify('bookmarks.toggle')<CR>
-nnoremap zl <Cmd>call VSCodeNotify('bookmarks.listFromAllFiles')<CR>
+nnoremap \m <Cmd>call VSCodeNotify('bookmarks.toggle')<CR>
+nnoremap \l <Cmd>call VSCodeNotify('bookmarks.listFromAllFiles')<CR>
 " fuzzy find
 nnoremap \f <Cmd>call VSCodeNotify('fuzzySearch.activeTextEditor')<CR>
 
